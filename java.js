@@ -53,9 +53,41 @@ function render() {
   }
 }
 
-// event handler === Austin's Clean this up!
-function clickHandler (event){
+// event handler === Austin's === need to write and re-write and clean this up!
+function clickHandler(event) {
+  for (var i = 0; i < Product.currentProduct.legnth, i++) {
 
+    if (event.target.id === Product.currentProduct[i].name) {
+      Product.currentProduct[i].clicks++;
+      Product.totalClicks++;
+      var remEl = document.getElementById('productImage');
+      while (remEl.firshChild) {
+        remEl.removeChild(remEl.firshChild);
+      }
+      if (totalClicks === 25) {
+        var remEl = document.getElementById('imgPick');
+        while (remEl.firstChild) {
+          remEl.removeChild(remEl.firstChild);
+        }
+        converstionRate();
+        Product.imageHTML.removeEventListener('click', clickHandler);
+        var secEl = document.createElement('selection');
+        secEl.id = 'results';
+        var var h2El = document.createElement('h2');
+        h2El.textContent = 'Results';
+        secEl.appendChild(h2El);
+        var ulEl = document.createElement('li');
+        liEl.textContent = products[i].clicks + ' votes for ' + Products.all[i].name + '.';
+        ulEl.appendChild(liEl);
+      }
+      secEl.appendChild(ulEl);
+      Product.imageHTML.appendChild(secEl);
+    }
+  } esle {
+      render();
+      converstionRate();
+
+  }
 }
 
 // ONE extra product
