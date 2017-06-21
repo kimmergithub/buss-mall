@@ -1,10 +1,10 @@
 'use strict';
+//download beautify package
 
 Product.totalClicks = 0;
 Product.all = [];
 Product.previousProduct = [];
 Product.currentProduct = [];
-
 Product.imageHTML = document.getElementById('productImage');
 
 function Product (name, image) {
@@ -43,50 +43,52 @@ function generateImage() {
   Product.previousProduct = Product.currentProduct;
 }
 
-function render() {
-  generateImage();
-  for (var i = 0; i < Product.all.length; i++) {
-    var imgEl = document.createElement('img');
-    imgEl.src = Product.currentProduct[i].image;
-    imgEl.id = Product.currentProduct[i].name;
-    Product.imageHTML.appendChild(imgEl);
-  }
-}
-
 // event handler === Austin's === need to write and re-write and clean this up!
 function clickHandler(event) {
-  for (var i = 0; i < Product.currentProduct.legnth, i++) {
+  for (var i = 0; i < Product.currentProduct.length; i++) {
 
     if (event.target.id === Product.currentProduct[i].name) {
       Product.currentProduct[i].clicks++;
       Product.totalClicks++;
       var remEl = document.getElementById('productImage');
-      while (remEl.firshChild) {
-        remEl.removeChild(remEl.firshChild);
+      while (remEl.firstChild) {
+        remEl.removeChild(remEl.firstChild);
       }
-      if (totalClicks === 25) {
-        var remEl = document.getElementById('imgPick');
-        while (remEl.firstChild) {
-          remEl.removeChild(remEl.firstChild);
+      if (Product.totalClicks === 25) {
+        var remEL = document.getElementById('imgPick');
+        while (remEL.firstChild) {
+          remEL.removeChild(remEL.firstChild);
         }
         converstionRate();
         Product.imageHTML.removeEventListener('click', clickHandler);
         var secEl = document.createElement('selection');
         secEl.id = 'results';
-        var var h2El = document.createElement('h2');
+        var h2El = document.createElement('h2');
         h2El.textContent = 'Results';
         secEl.appendChild(h2El);
-        var ulEl = document.createElement('li');
-        liEl.textContent = products[i].clicks + ' votes for ' + Products.all[i].name + '.';
-        ulEl.appendChild(liEl);
+        var ulEl = document.createElement('ul');
+        for (var i = 0; i < Product.all.length; i++) {
+          var liEl = document.createElement('li');
+          liEl = Product.all[i].clicks + ' votes for ' + Product.all[i].name + '.';
+          ulEl.appendChild(liEl);
+        }
+        secEl.appendChild(ulEl);
+        Product.imageHTML.appendChild(secEl);
+      } else {
+        render();
+        converstionRate();
       }
-      secEl.appendChild(ulEl);
-      Product.imageHTML.appendChild(secEl);
     }
-  } esle {
-      render();
-      converstionRate();
+  }
+}
 
+function render() {
+  generateImage();
+  for (var i = 0; i < Product.currentProduct.length; i++) {
+    var imgEl = document.createElement('img');
+    imgEl.src = Product.currentProduct[i].image;
+    imgEl.id = Product.currentProduct[i].name;
+    Product.imageHTML.appendChild(imgEl);
   }
 }
 
@@ -104,14 +106,14 @@ new Product ('dragon', 'images/dragon.jpg');
 new Product ('pen', 'images/pen.jpg');
 new Product ('pet-sweep', 'images/petsweep.jpg');
 new Product ('shark', 'images/shark.jpg');
-new Product ('sweep', 'images/sweep.jpg');
+new Product ('sweep', 'images/sweep.png');
 new Product ('scissors', 'images/scissors.jpg');
 new Product ('tauntaun', 'images/tauntaun.jpg');
 new Product ('unicorn', 'images/unicorn.jpg');
-new Product ('usb', 'images/usb.jpg');
+new Product ('usb', 'images/usb.gif');
 new Product ('water-can', 'images/water-can.jpg');
 new Product ('wine-glass', 'images/wine-glass.jpg');
-
 render();
+
 //event LISTENER
-Product.productImage.addEventListener('click', clickHandler);
+Product.imageHTML.addEventListener('click', clickHandler);
