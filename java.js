@@ -55,13 +55,14 @@ function clickHandler(event) {
         remEl.removeChild(remEl.firstChild);
       }
       if (Product.totalClicks === 25) {
-        var remEL = document.getElementById('imgPick');
+        var remEL = document.getElementById('productImage');
+        moveToStorage();
         while (remEL.firstChild) {
           remEL.removeChild(remEL.firstChild);
         }
         converstionRate();
         Product.imageHTML.removeEventListener('click', clickHandler);
-        var secEl = document.createElement('selection');
+        var secEl = document.createElement('section');
         secEl.id = 'results';
         var h2El = document.createElement('h2');
         h2El.textContent = 'Results';
@@ -69,14 +70,16 @@ function clickHandler(event) {
         var ulEl = document.createElement('ul');
         for (var i = 0; i < Product.all.length; i++) {
           var liEl = document.createElement('li');
-          liEl = Product.all[i].clicks + ' votes for ' + Product.all[i].name + '.';
+          liEl.textContent = Product.all[i].clicks + ' votes for ' + Product.all[i].name + '.';
           ulEl.appendChild(liEl);
         }
         secEl.appendChild(ulEl);
         Product.imageHTML.appendChild(secEl);
       } else {
+        moveToStorage();
         render();
         converstionRate();
+        createChart();
       }
     }
   }
@@ -92,28 +95,144 @@ function render() {
   }
 }
 
+function emptyStorage () {
+  if (localStorage.length === 0) {
 // ONE extra product
-new Product ('bag', 'images/bag.jpg');
-new Product ('banana', 'images/banana.jpg');
-new Product ('bathroom', 'images/bathroom.jpg');
-new Product ('boots', 'images/boots.jpg');
-new Product ('breakfast', 'images/breakfast.jpg');
-new Product ('bubblegum', 'images/bubblegum.jpg');
-new Product ('chair', 'images/chair.jpg');
-new Product ('cthulhu', 'images/cthulhu.jpg');
-new Product ('dog-duck', 'images/dog-duck.jpg');
-new Product ('dragon', 'images/dragon.jpg');
-new Product ('pen', 'images/pen.jpg');
-new Product ('pet-sweep', 'images/petsweep.jpg');
-new Product ('shark', 'images/shark.jpg');
-new Product ('sweep', 'images/sweep.png');
-new Product ('scissors', 'images/scissors.jpg');
-new Product ('tauntaun', 'images/tauntaun.jpg');
-new Product ('unicorn', 'images/unicorn.jpg');
-new Product ('usb', 'images/usb.gif');
-new Product ('water-can', 'images/water-can.jpg');
-new Product ('wine-glass', 'images/wine-glass.jpg');
-render();
+    new Product ('bag', 'images/bag.jpg');
+    new Product ('banana', 'images/banana.jpg');
+    new Product ('bathroom', 'images/bathroom.jpg');
+    new Product ('boots', 'images/boots.jpg');
+    new Product ('breakfast', 'images/breakfast.jpg');
+    new Product ('bubblegum', 'images/bubblegum.jpg');
+    new Product ('chair', 'images/chair.jpg');
+    new Product ('cthulhu', 'images/cthulhu.jpg');
+    new Product ('dog-duck', 'images/dog-duck.jpg');
+    new Product ('dragon', 'images/dragon.jpg');
+    new Product ('pen', 'images/pen.jpg');
+    new Product ('pet-sweep', 'images/petsweep.jpg');
+    new Product ('shark', 'images/shark.jpg');
+    new Product ('sweep', 'images/sweep.png');
+    new Product ('scissors', 'images/scissors.jpg');
+    new Product ('tauntaun', 'images/tauntaun.jpg');
+    new Product ('unicorn', 'images/unicorn.jpg');
+    new Product ('usb', 'images/usb.gif');
+    new Product ('water-can', 'images/water-can.jpg');
+    new Product ('wine-glass', 'images/wine-glass.jpg');
+  } else {
+    //pullstorage function
+    retrieveFromStorage();
+  }
+}
+
+function moveToStorage () {
+  var allStore = JSON.stringify(Product.all);
+  localStorage.setItem('data', allStore);
+}
+
+function retrieveFromStorage () {
+  var allStore = localStorage.getItem('data');
+  Product.all = JSON.parse(allStore);
+}
 
 //event LISTENER
 Product.imageHTML.addEventListener('click', clickHandler);
+
+function createChart (){
+  var getChart = document.getElementById('canvaChart');
+  var ctx = document.getElementById('chart');
+  ctx.appendChild(getChart);
+  var chartL = [];
+  var chartD = [];
+
+  for (var i = 0; i < Product.all.length; i++) {
+    chartL.push(Product.all[i].name);
+    chartD.push(Product.all[i].clicks);
+  }
+  // CANVAS CODE
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: chartL,
+      datasets: [{
+        label: '# of clicks',
+        data: chartD,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero:true
+          }
+        }]
+      }
+    }
+  });
+}
+emptyStorage();
+render();
